@@ -152,16 +152,77 @@ int binarySearch(int arr[], int be, int en, int elementToSearch) {
     if (be > en) return -1;
 
     int mid = (be + en ) / 2;
-    
+
     if (arr[mid] == elementToSearch) return mid;
 
-    if (arr[mid] > elementToSearch){
+    if (arr[mid] > elementToSearch) {
         // search in the left
         return binarySearch(arr, be, mid - 1, elementToSearch);
     }
 
     return binarySearch(arr, mid + 1, en, elementToSearch);
 }
+
+void copyArr(int x[], int arr[], int be, int en) {
+    while (be <= en) {
+        x[be] = arr[be];
+        ++be;
+    }
+}
+
+void mergeSortedArr(int arr[], int i, int ei, int j, int ej) {
+    // i = first array
+    // j = second array
+    // e for end
+
+    // HW : with index manipulation
+    const int N = 100;
+    int x[N];
+    int y[100];
+    copyArr(x, arr, i, ei);
+    copyArr(y, arr, j, ej);
+
+    int k = i;
+
+    while (i <= ei && j <= ej) {
+        if (x[i] < y[j]) {
+            arr[k] = x[i];
+            ++k;
+            ++i;
+        } else {
+            arr[k] = y[j];
+            ++j;
+            ++k;
+        }
+    }
+
+    while (i <= ei) {
+        arr[k] = x[i];
+        ++i;
+        ++k;
+    }
+
+    while (j <= ej) {
+        arr[k] = y[j];
+        ++j;
+        ++k;
+    }
+}
+
+
+void mergeSort(int arr[], int be, int en) {
+    if (be >= en) {
+        return;
+    }
+
+    int mid = (be + en) / 2;
+
+    mergeSort(arr, be, mid);
+    mergeSort(arr, mid + 1, en);
+
+    mergeSortedArr(arr, be, mid, mid + 1, en);
+}
+
 
 int main() {
     int n;
@@ -174,7 +235,7 @@ int main() {
     // int ans = power(n, p);
     // cout << ans;
 
-    int arr[10];
+    int arr[100];
     inputArr(arr, n);
 
     // bubbleSort(arr, 0, n - 1);
@@ -186,6 +247,12 @@ int main() {
 
     // printNum(n);
 
-    int elementToSearch; cin >> elementToSearch;
-    cout << binarySearch(arr, 0, n - 1, elementToSearch);
+    // int elementToSearch; cin >> elementToSearch;
+    // cout << binarySearch(arr, 0, n - 1, elementToSearch);
+
+    mergeSort(arr, 0, n - 1);
+    display(arr, n);
+
+
+
 }
