@@ -63,9 +63,6 @@ int largestPos(int arr[], int be, int en) {
     } else {
         posInRemArr;
     }
-
-
-
 }
 
 void inputArr(int arr[], int n) {
@@ -89,12 +86,13 @@ int findElement(int arr[], int be, int en, int elementToSearch) {
 
 
 // bubble sort
+int cnt = 0;
 void bubbleSort(int arr[], int be, int en) {
+    // ++cnt;
     if (be >= en) {
         return ;
     }
     // i have ensured that I have atleast 2 elements
-
     bubbleSort(arr, be + 1, en);
     if (arr[be] > arr[be + 1]) {
         swap(arr[be], arr[be + 1]);
@@ -238,9 +236,9 @@ int main() {
     int arr[100];
     inputArr(arr, n);
 
-    // bubbleSort(arr, 0, n - 1);
-
-    // display(arr, n);
+    bubbleSort(arr, 0, n - 1);
+    display(arr, n);
+    cout << cnt << endl;
 
     // bool ans = isSorted(arr, 0, n - 1);
     // cout << ans;
@@ -250,8 +248,8 @@ int main() {
     // int elementToSearch; cin >> elementToSearch;
     // cout << binarySearch(arr, 0, n - 1, elementToSearch);
 
-    mergeSort(arr, 0, n - 1);
-    display(arr, n);
+    // mergeSort(arr, 0, n - 1);
+    // display(arr, n);
 
 
 
