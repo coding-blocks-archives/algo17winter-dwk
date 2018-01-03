@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-class Node{
+class Node {
 public:
     int data;
     Node* next;
@@ -19,20 +19,20 @@ public:
 }
 */
 
-Node* createLL(){
+Node* createLL() {
     Node* head = NULL;
     Node* tail = NULL;
     int x;
-    while(true){
+    while (true) {
         cin >> x;
         if (x == -1) break;
 
         Node* curNode = new Node;
         // curNode.data = x;
         (*curNode).data = x;
-        curNode->next = NULL;   // same 
+        curNode->next = NULL;   // same
 
-        if (head == NULL){
+        if (head == NULL) {
             // this is the first node of the LL
             head = curNode;
             tail = curNode;
@@ -45,34 +45,34 @@ Node* createLL(){
 }
 
 
-void printLL(Node* head){
+void printLL(Node* head) {
     Node* cur = head;
 
     // while(cur != NULL){
-    while(cur){
+    while (cur) {
         cout << cur->data << "-->";
         cur = cur->next;
     }
 }
 
-int length(Node* head){
+int length(Node* head) {
     Node* cur = head;
     int cnt = 0;
-    while(cur){
+    while (cur) {
         ++cnt;
         cur = cur->next;
     }
     return cnt;
 }
 
-Node* mergeSortedLL(Node* a, Node* b){
+Node* mergeSortedLL(Node* a, Node* b) {
     if (!a && !b) return NULL;
-    
+
     if (!a) return b;
     if (!b) return a;
 
     // both a && b are there
-    if (a->data < b->data){
+    if (a->data < b->data) {
         a->next = mergeSortedLL(a->next, b);
         return a;
     } else {
@@ -82,27 +82,44 @@ Node* mergeSortedLL(Node* a, Node* b){
 }
 
 
-Node* midPoint(Node* head){
+Node* midPoint(Node* head) {
 
     //Get, set
     Node* slow = head;
     Node* fast = head;
 
     // Go
-    while(slow && fast && fast->next && fast->next->next){
+    while (slow && fast && fast->next && fast->next->next) {
         slow = slow->next;
         fast = fast->next->next;
     }
     return slow;
 }
 
-void printNode(Node* mid){
+void printNode(Node* mid) {
     cout << mid  << " ";
     if (mid) cout << mid->data;
     cout << endl;
 }
 
-int main(){
+Node* mergeSort(Node* head) {
+    if (!head || !head->next) {
+        return head;
+    }
+
+    Node* mid = midPoint(head);
+
+    Node* a = head;
+    Node* b = mid->next;
+    mid->next = NULL;       // a-->b are now a, b
+
+    a = mergeSort(a);
+    b = mergeSort(b);
+    Node* ans = mergeSortedLL(a, b);
+    return ans;
+}
+
+int main() {
     // Node* head = createLL();
     // printLL(head);
 
@@ -114,4 +131,9 @@ int main(){
     // Node* head = createLL();
     // Node* mid = midPoint(head);
     // printNode(mid);
+
+    Node* head = createLL();
+    head = mergeSort(head);
+    printLL(head);
+
 }
