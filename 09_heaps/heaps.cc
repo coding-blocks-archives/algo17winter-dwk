@@ -67,15 +67,37 @@ public:
 
 };
 
+void printKSmallest(int arr[], int k){
+    Heap h;
+    // first k-elements
+    for(int i = 0; i < k; ++i){
+        h.push(arr[i]);
+    }
+
+    // remaining elements
+    for(int i = k; i < 5; ++i){
+        h.push(arr[i]);
+        h.pop();
+    }
+
+    while(h.empty()== false){
+        cout << h.top() << " ";
+        h.pop();
+    }
+}
+
 
 int main() {
-    Heap H;
-    H.push(1);
-    H.push(2);
-    H.push(3);
-    cout << H.top() <<" "; H.pop();
-    cout << H.top() <<" "; H.pop();
-    cout << H.top() <<" "; H.pop();
-    cout << H.top() <<" "; H.pop();
+    // Heap H;
+    // H.push(1);
+    // H.push(2);
+    // H.push(3);
+    // cout << H.top() <<" "; H.pop();
+    // cout << H.top() <<" "; H.pop();
+    // cout << H.top() <<" "; H.pop();
+    // cout << H.top() <<" "; H.pop();
 
+    int arr[] = {5,4, 3,2,1};
+    int k = 2;
+    printKSmallest(arr, 2);
 }
