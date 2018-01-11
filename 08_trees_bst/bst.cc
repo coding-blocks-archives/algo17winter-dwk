@@ -44,12 +44,70 @@ bool isBst(TreeNode* root, int minVal, int maxVal){
         );
 }
 
+class PairHT{
+public:
+    TreeNode* head;
+    TreeNode* tail;
+    PairHT(TreeNode* h, TreeNode* t){
+        head = NULL;
+        tail = NULL;
+    }
+}; 
+
+PairHT convertToLL(TreeNode* root){
+    if (!root){
+        return PairHT(NULL, NULL);
+    }
+
+    PairHT lt = convertToLL(root->left);
+    PairHT rt = convertToLL(root->right);
+    PairHT cur(NULL, NULL);
+
+    if(lt.head){
+        root->left = lt.tail;
+        lt.tail->right = root;
+        cur.head = lt.head;
+    } else{
+        cur.head = root;
+        root->left = NULL;
+    }
+
+    // right subtree
+    if (rt.head){
+        root->right = rt.head;
+        rt.head->left = root;
+        cur.tail = rt.tail;
+    } else{
+        root->right = NULL;
+        cur.tail = root;
+    }
+    return cur;
+}
+
+void printLL(TreeNode* head){
+    TreeNode* cur = head;
+    while(cur){
+        if (cur->left) cout << "(" << cur->left->data << ")";
+        cout << cur->data;
+        if (cur->right) cout << "(" << cur->right->data << ")";
+        cout << "<-->";
+        cur = cur->right;
+    }
+    cout << endl;
+}
+
 int main(){
     // TreeNode* root = createBST();
     // levelOutput(root);
     
 
-    TreeNode* root = levelInput();  // binary Tree
-    const int inf = (int)1e6;
-    cout << isBst(root, -inf, inf);
+    // TreeNode* root = levelInput();  // binary Tree
+    // const int inf = (int)1e6;
+    // cout << isBst(root, -inf, inf);
+
+
+    TreeNode* root = createBST();
+    PairHT ans = convertToLL(root);
+    printLL(ans.head);
+
 }
